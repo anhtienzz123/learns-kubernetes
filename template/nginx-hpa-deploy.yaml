@@ -1,0 +1,27 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  annotations:
+    autoscaling.alpha.kubernetes.io/conditions:
+      '[{"type":"AbleToScale","status":"True","lastTransitionTime":"2021-11-11T04:44:25Z","reason":"SucceededGetScale","message":"the
+      HPA controller was able to get the target''s current scale"},{"type":"ScalingActive","status":"False","lastTransitionTime":"2021-11-11T04:44:40Z","reason":"FailedGetResourceMetric","message":"the
+      HPA was unable to compute the replica count: failed to get cpu utilization:
+      unable to get metrics for resource cpu: unable to fetch metrics from resource
+      metrics API: the server could not find the requested resource (get pods.metrics.k8s.io)"}]'
+  creationTimestamp: '2021-11-11T04:44:10Z'
+  name: nginx-deploy
+  namespace: default
+  resourceVersion: '127117'
+  uid: dea6fcba-3623-43da-a478-6d3e876d98d8
+spec:
+  maxReplicas: 5
+  minReplicas: 3
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nginx-deploy
+  targetCPUUtilizationPercentage: 80
+status:
+  currentReplicas: 3
+  desiredReplicas: 3
+  lastScaleTime: '2021-11-11T04:44:25Z'

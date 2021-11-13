@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: myapp
+spec:
+  selector:
+    matchLabels:
+      name: myapp
+  template:
+    metadata:
+      name: myapp
+      labels:
+        name: myapp
+    spec:
+      volumes:
+        # Khai báo VL sử dụng PVC
+        - name: myvolume
+          persistentVolumeClaim:
+            claimName: pvc1
+      containers:
+        - name: myapp
+          image: nginx:1.17.6
+          resources:
+            limits:
+              memory: '50Mi'
+              cpu: '500m'
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: '/usr/share/nginx/html'
+              name: myvolume

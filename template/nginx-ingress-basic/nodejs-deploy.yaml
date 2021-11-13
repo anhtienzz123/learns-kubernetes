@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-deploy
+  namespace: nginx-ingress
+  labels:
+    app: nodejs-deploy
+spec:
+  selector:
+    matchLabels:
+      app: nodejs-server
+  replicas: 2
+  template:
+    metadata:
+      name: nodejs-server
+      namespace: nginx-ingress
+      labels:
+        app: nodejs-server
+    spec:
+      containers:
+        - name: nodejs-server-container
+          image: testlaptrinh/nodejs-deploy
+          resources:
+            limits:
+              memory: '500Mi'
+              cpu: '200m'
+          ports:
+            - containerPort: 3000
